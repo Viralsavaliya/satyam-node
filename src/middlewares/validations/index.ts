@@ -4,7 +4,7 @@ import commonUtils from "../../utils/commonUtils";
 
 const config = require("config")
 const jwt = require('jsonwebtoken')
-import redisClient from "../../utils/redisHelper"; 
+// import redisClient from "../../utils/redisHelper"; 
 import aes from "../../utils/aes";
 
 async function verifyToken(req: any, res: Response, next: Function) {
@@ -27,17 +27,17 @@ async function verifyToken(req: any, res: Response, next: Function) {
                 let midLayer = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
                 const userData = JSON.parse(aes.decrypt(midLayer.toString(), config.get("OUTER_KEY_USER")));
                 const userObj = { userid : userData.userId,usertype : userData.userType}           
-                let blackListed: [] = await redisClient.lrange('BL_' + midLayer.toString(), 0, -1)
-                let blackListed_ = blackListed.find(value => value == token)    
+                // let blackListed: [] = await redisClient.lrange('BL_' + midLayer.toString(), 0, -1)
+                // let blackListed_ = blackListed.find(value => value == token)    
     
-                let tokens: [] = await redisClient.lrange(midLayer.toString(), 0, -1)
-                let token_ = tokens.find(value => JSON.parse(value).accessToken.toString() == token.toString())
+                // let tokens: [] = await redisClient.lrange(midLayer.toString(), 0, -1)
+                // let token_ = tokens.find(value => JSON.parse(value).accessToken.toString() == token.toString())
                 
-                if (blackListed_ && !token_) {
+                // if (blackListed_ && !token_) {
                     reject(AppStrings.BLACKLISTED_TOKEN);
-                } else {
-                    resolve(userObj);
-                }
+                // } else {
+                    // resolve(userObj);
+                // }
             }
         })
     }).then((userObj: any) => {
@@ -71,14 +71,14 @@ async function verifyRefreshToken(req: any, res: Response, next: Function) {
                 req.midLayer = midLayer
                 req.token = token
 
-                let tokens: [] = await redisClient.lrange(midLayer, 0, -1)
-                let token_ = tokens.find(value => JSON.parse(value).refreshToken.toString() == token.toString())
+                // let tokens: [] = await redisClient.lrange(midLayer, 0, -1)
+                // let token_ = tokens.find(value => JSON.parse(value).refreshToken.toString() == token.toString())
 
-                if (token_) {
-                    return next();
-                } else {
-                    return commonUtils.sendError(req, res, {message: AppStrings.UNAUTHORIZED}, 401);
-                }
+                // if (token_) {
+                    // return next();
+                // } else {
+                    // return commonUtils.sendError(req, res, {message: AppStrings.UNAUTHORIZED}, 401);
+                // }
             }
         })
     } else {

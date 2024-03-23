@@ -1,5 +1,4 @@
 var morgan = require('morgan');
-import redisClient from "./utils/redisHelper";
 import path from "path";
 const config = require("config");
 const mongoose = require('mongoose');
@@ -125,27 +124,27 @@ app.get("/test", function (req: Request, res: Response, next: NextFunction) {
     res.send("success")
 });
 /* common image upload */
-app.post("/api/uploadImage/:type", async function (req: Request, res: Response, next: NextFunction) {
-    await commoncontroller.uploadImage(req, res, next);
-});
+// app.post("/api/uploadImage/:type", async function (req: Request, res: Response, next: NextFunction) {
+//     await commoncontroller.uploadImage(req, res, next);
+// });
 
-app.post("/api/uploadSupportFiles", async function (req: Request, res: Response, next: NextFunction) {
-    await commoncontroller.uploadSupportFiles(req, res, next);
-});
+// app.post("/api/uploadSupportFiles", async function (req: Request, res: Response, next: NextFunction) {
+//     await commoncontroller.uploadSupportFiles(req, res, next);
+// });
 
-app.use('/api/inAppPurchase', userRouter);
+// app.use('/api/inAppPurchase', userRouter);
 
 // app.post("/api/inAppPurchase", async function (req: Request, res: Response) {
 //     await subscriptionController.inAppPurchase(req, res);
 // });
 
-app.post("/api/webHook", express.raw({ type: 'application/json' }), async function (req: Request, res: Response) {
-    await webhookController.webHook(req, res);
-})
+// app.post("/api/webHook", express.raw({ type: 'application/json' }), async function (req: Request, res: Response) {
+//     await webhookController.webHook(req, res);
+// })
 
-app.post("/inAppWebhookNew", express.raw({ type: 'application/json' }), async function (req: Request, res: Response) {
-    await webhookController.inAppWebhook(req, res);
-})
+// app.post("/inAppWebhookNew", express.raw({ type: 'application/json' }), async function (req: Request, res: Response) {
+//     await webhookController.inAppWebhook(req, res);
+// })
 
 app.get('/api/apple-app-site-association', (req: any, res: any) => {
     const data: any = {

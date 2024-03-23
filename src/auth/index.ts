@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import commonUtils from "../utils/commonUtils";
 import aes from "../utils/aes";
-import redisClient from "../utils/redisHelper";
+// import redisClient from "../utils/redisHelper";
 import mongoose from "mongoose";
 import { UserType } from "../utils/enum";
 import { AppStrings } from "../utils/appStrings";
@@ -26,7 +26,7 @@ const register = async (user_data: any, userType: any, otp: any) => {
     const accessToken = jwt.sign({ sub: payload }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_ACCESS_TIME") });
     const refreshToken = await generateRefreshToken(payload);
     let data = { accessToken: accessToken, refreshToken: refreshToken }
-    await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
+    // await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
 
     return data;
 }
@@ -38,11 +38,11 @@ const login = async (userId: ObjectId, createdAt: Date) => {
             "createdAt": createdAt
         }), config.get("OUTER_KEY_USER"))
 
-    const oldValue = await redisClient.get('user_' + userId)
+    // const oldValue = await redisClient.get('user_' + userId)
 
-    if (oldValue) {
-        await logoutforalreadylogin(JSON.parse(oldValue).accessToken);
-    }
+    // if (oldValue) {
+    //     await logoutforalreadylogin(JSON.parse(oldValue).accessToken);
+    // }
 
     let payload = await aes.encrypt(uniqueUserKey, config.get("OUTER_KEY_PAYLOAD"))
 
@@ -52,8 +52,8 @@ const login = async (userId: ObjectId, createdAt: Date) => {
 
     let data = { accessToken: accessToken, refreshToken: refreshToken }
 
-    await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
-    await redisClient.set('user_' + userId, JSON.stringify(data))
+    // await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
+    // await redisClient.set('user_' + userId, JSON.stringify(data))
 
     return data;
 }
@@ -72,7 +72,7 @@ const adminLogin = async (userId: ObjectId, createdAt: Date) => {
 
     let data = { accessToken: accessToken, refreshToken: refreshToken }
 
-    await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
+    // await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
 
     return data;
 }
@@ -90,14 +90,14 @@ const logout = async (req: any, res: Response) => {
         } else {
             const uniqueUserKey = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
 
-            let tokens: [] = await redisClient.lrange(uniqueUserKey.toString(), 0, -1)
+            // let tokens: [] = await redisClient.lrange(uniqueUserKey.toString(), 0, -1)
 
-            let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
+            // let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
 
             // remove the refresh token
-            await redisClient.lrem(uniqueUserKey.toString(), 1, await redisClient.lindex(uniqueUserKey.toString(), index));
+            // await redisClient.lrem(uniqueUserKey.toString(), 1, await redisClient.lindex(uniqueUserKey.toString(), index));
             // blacklist current access token
-            await redisClient.lpush('BL_' + uniqueUserKey.toString(), token);
+            // await redisClient.lpush('BL_' + uniqueUserKey.toString(), token);
 
             return commonUtils.sendSuccess(req, res, {}, 204);
         }
@@ -112,14 +112,14 @@ const logoutforalreadylogin = async (token: any) => {
         } else {
             const uniqueUserKey = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
 
-            let tokens: [] = await redisClient.lrange(uniqueUserKey.toString(), 0, -1)
+            // let tokens: [] = await redisClient.lrange(uniqueUserKey.toString(), 0, -1)
 
-            let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
+            // let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
 
             // remove the refresh token
-            await redisClient.lrem(uniqueUserKey.toString(), 1, await redisClient.lindex(uniqueUserKey.toString(), index));
+            // await redisClient.lrem(uniqueUserKey.toString(), 1, await redisClient.lindex(uniqueUserKey.toString(), index));
             // blacklist current access token
-            await redisClient.lpush('BL_' + uniqueUserKey.toString(), token);
+            // await redisClient.lpush('BL_' + uniqueUserKey.toString(), token);
 
         }
     })
@@ -133,12 +133,12 @@ const getAccessTokenPromise = async (oldToken: any) => {
             } else {
                 const uniqueUserKey = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
 
-                let tokens: [] = await redisClient.lrange(uniqueUserKey, 0, -1)
-                let token_ = tokens.find(value => JSON.parse(value).refreshToken.toString() == oldToken.toString())
+                // let tokens: [] = await redisClient.lrange(uniqueUserKey, 0, -1)
+                // let token_ = tokens.find(value => JSON.parse(value).refreshToken.toString() == oldToken.toString())
 
-                if (!token_) return reject({ error: AppStrings.INVALID_TOKEN, status: 401 });
+                // if (!token_) return reject({ error: AppStrings.INVALID_TOKEN, status: 401 });
 
-                let index = tokens.findIndex(value => JSON.parse(value).refreshToken.toString() == oldToken.toString())
+                // let index = tokens.findIndex(value => JSON.parse(value).refreshToken.toString() == oldToken.toString())
 
                 let payload = aes.encrypt(uniqueUserKey.toString(), config.get("OUTER_KEY_PAYLOAD"))
 
@@ -147,7 +147,7 @@ const getAccessTokenPromise = async (oldToken: any) => {
 
                 let data = { accessToken: accessToken, refreshToken: refreshToken }
 
-                await redisClient.lset(uniqueUserKey.toString(), index, JSON.stringify(data));
+                // await redisClient.lset(uniqueUserKey.toString(), index, JSON.stringify(data));
 
                 return resolve({ accessToken, refreshToken })
             }
@@ -214,7 +214,7 @@ const generateAdminAccessToken = async (payload: AdminTokenPayload) => {
     const accessToken = await _generateAccessToken(encryptPayloadData.payload, UserTokenRole.adminAccessToken);
     const refreshToken = await _generateAccessToken(encryptPayloadData.payload, UserTokenRole.adminAccessToken);
     const data = { accessToken, refreshToken }
-    await redisClient.lpush(payload.userId, JSON.stringify(data))
+    // await redisClient.lpush(payload.userId, JSON.stringify(data))
     return data;
 }
 

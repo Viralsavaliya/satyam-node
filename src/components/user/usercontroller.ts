@@ -16,7 +16,7 @@ const { google } = require('googleapis');
 const _ = require("underscore");
 import aes from "../../utils/aes";
 import eventEmitter from "../../utils/event";
-import redisClient from "../../utils/redisHelper";
+// import redisClient from "../../utils/redisHelper";
 import axios from "axios";
 const fs = require('fs');
 const jwt = require('jsonwebtoken')
@@ -620,13 +620,13 @@ async function getJWTOken(req: any, res: any, otp: any) {
             } else {
                 let midLayer = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
                 const userData = JSON.parse(aes.decrypt(midLayer.toString(), config.get("OUTER_KEY_USER")));
-                let tokens: [] = await redisClient.lrange(midLayer.toString(), 0, -1)
-                let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
+                // let tokens: [] = await redisClient.lrange(midLayer.toString(), 0, -1)
+                // let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
 
                 // remove the refresh token
-                await redisClient.lrem(midLayer.toString(), 1, await redisClient.lindex(midLayer.toString(), index));
+                // await redisClient.lrem(midLayer.toString(), 1, await redisClient.lindex(midLayer.toString(), index));
                 // blacklist current access token
-                await redisClient.lpush('BL_' + midLayer.toString(), token);
+                // await redisClient.lpush('BL_' + midLayer.toString(), token);
                 userData.otp = otp;
 
                 // console.log(userData);
