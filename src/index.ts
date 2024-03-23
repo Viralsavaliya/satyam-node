@@ -214,5 +214,5 @@ server.listen(config.get("PORT"), () => {
         config.get("DB_CONN_STRING"),
         () => console.log('connected to mongodb.')
     );
-    // redisClient.on('error', (err: any) => console.log('Redis Client Error', err));
+    redisClient.on('error', (err: any) => console.log('Redis Client Error', err));
 });
