@@ -1169,199 +1169,199 @@ async function getSupportTickets(req: any, res: Response) {
 };
 
 async function notificationList(req: Request, res: Response) {
-    try {
-        let user_id = req.headers.userid;
+    // try {
+    //     let user_id = req.headers.userid;
 
-        let { page }: any = req.query;
-        page = page || 1;
-        const limit = parseInt(req.query.limit as string) || 10;
-        const skip = (page - 1) * limit;
+    //     let { page }: any = req.query;
+    //     page = page || 1;
+    //     const limit = parseInt(req.query.limit as string) || 10;
+    //     const skip = (page - 1) * limit;
 
-        const notifications = await UserNotification.aggregate([
-            { $sort: { createdAt: -1 } },
-            { $match: { receiver_id: new mongoose.Types.ObjectId(user_id), is_delete: 0 } },
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'sender_id',
-                    foreignField: '_id',
-                    as: 'user'
-                },
-            },
-            {
-                $lookup: {
-                    from: 'posts',
-                    let: { postId: { $toObjectId: '$data.id' } },
-                    pipeline: [
-                        {
-                            $match: {
-                                $expr: { $eq: ['$_id', '$$postId'] }
-                            }
-                        }
-                    ],
-                    as: 'post_user'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'usersubscriptions',
-                    let: { subscriptionId: { $toObjectId: '$data.subscription_id' } },
-                    pipeline: [
-                        {
-                            $match: {
-                                $expr: { $eq: ['$_id', '$$subscriptionId'] }
-                            }
-                        }
-                    ],
-                    as: 'subscription_data'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'post_user.user_id',
-                    foreignField: '_id',
-                    as: 'post_user_image'
-                },
-            },
-            { $skip: skip },
-            { $limit: limit },
-            { $sort: { createdAt: -1 } },
-            {
-                $unwind: {
-                    path: "$user",
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $unwind: {
-                    path: "$post_user",
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $unwind: {
-                    path: "$post_user_image",
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $unwind: {
-                    path: "$subscription_data",
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $project: {
-                    _id: 1,
-                    message: 1,
-                    title: 1,
-                    is_read: 1,
-                    type: 1,
-                    is_admin: 1,
-                    createdAt: 1,
-                    post_id: {
-                        $switch: {
-                            branches: [
-                                {
-                                    case: { $eq: ["$type", 6] },
-                                    then: "$data.post_id"
-                                },
-                                {
-                                    case: { $eq: ["$type", 2] },
-                                    then: "$data.id"
-                                }
-                            ],
-                            default: null
-                        }
-                    },
-                    sender_id: {
-                        $switch: {
-                            branches: [
-                                {
-                                    case: { $eq: ["$type", 6] },
-                                    then: "$data.id"
-                                },
-                                {
-                                    case: { $eq: ["$type", 1] },
-                                    then: "$data.id"
-                                }
-                            ],
-                            default: null
-                        }
-                    },
-                    user_image: {
-                        $switch: {
-                            branches: [
-                                {
-                                    case: { $eq: ["$type", 1] },
-                                    then: "$user.image"
-                                },
-                                {
-                                    case: { $eq: ["$type", 2] },
-                                    then: "$post_user_image.image"
-                                },
-                                {
-                                    case: { $eq: ["$type", 6] },
-                                    then: "$user.image"
-                                }
-                            ],
-                            default: null
-                        }
-                    },
-                    subscription_id: {
-                        $cond: {
-                            if: { $eq: ["$type", 3] },
-                            then: "$data.subscription_id",
-                            else: null
-                        }
-                    },
-                    payment_status: {
-                        $cond: {
-                            if: { $eq: ["$type", 3] },
-                            then: "$subscription_data.payment_status",
-                            else: null
-                        }
-                    },
-                    ticket_id: {
-                        $cond: {
-                            if: { $eq: ["$type", 4] },
-                            then: "$data.id",
-                            else: null
-                        }
-                    },
-                    ticket_status: {
-                        $cond: {
-                            if: { $eq: ["$type", 4] },
-                            then: "$data.status",
-                            else: null
-                        }
-                    }
-                }
-            }
-        ])
-        const user = await User.findOne({ _id: user_id })
+    //     const notifications = await UserNotification.aggregate([
+    //         { $sort: { createdAt: -1 } },
+    //         { $match: { receiver_id: new mongoose.Types.ObjectId(user_id), is_delete: 0 } },
+    //         {
+    //             $lookup: {
+    //                 from: 'users',
+    //                 localField: 'sender_id',
+    //                 foreignField: '_id',
+    //                 as: 'user'
+    //             },
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: 'posts',
+    //                 let: { postId: { $toObjectId: '$data.id' } },
+    //                 pipeline: [
+    //                     {
+    //                         $match: {
+    //                             $expr: { $eq: ['$_id', '$$postId'] }
+    //                         }
+    //                     }
+    //                 ],
+    //                 as: 'post_user'
+    //             }
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: 'usersubscriptions',
+    //                 let: { subscriptionId: { $toObjectId: '$data.subscription_id' } },
+    //                 pipeline: [
+    //                     {
+    //                         $match: {
+    //                             $expr: { $eq: ['$_id', '$$subscriptionId'] }
+    //                         }
+    //                     }
+    //                 ],
+    //                 as: 'subscription_data'
+    //             }
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: 'users',
+    //                 localField: 'post_user.user_id',
+    //                 foreignField: '_id',
+    //                 as: 'post_user_image'
+    //             },
+    //         },
+    //         { $skip: skip },
+    //         { $limit: limit },
+    //         { $sort: { createdAt: -1 } },
+    //         {
+    //             $unwind: {
+    //                 path: "$user",
+    //                 preserveNullAndEmptyArrays: true,
+    //             },
+    //         },
+    //         {
+    //             $unwind: {
+    //                 path: "$post_user",
+    //                 preserveNullAndEmptyArrays: true,
+    //             },
+    //         },
+    //         {
+    //             $unwind: {
+    //                 path: "$post_user_image",
+    //                 preserveNullAndEmptyArrays: true,
+    //             },
+    //         },
+    //         {
+    //             $unwind: {
+    //                 path: "$subscription_data",
+    //                 preserveNullAndEmptyArrays: true,
+    //             },
+    //         },
+    //         {
+    //             $project: {
+    //                 _id: 1,
+    //                 message: 1,
+    //                 title: 1,
+    //                 is_read: 1,
+    //                 type: 1,
+    //                 is_admin: 1,
+    //                 createdAt: 1,
+    //                 post_id: {
+    //                     $switch: {
+    //                         branches: [
+    //                             {
+    //                                 case: { $eq: ["$type", 6] },
+    //                                 then: "$data.post_id"
+    //                             },
+    //                             {
+    //                                 case: { $eq: ["$type", 2] },
+    //                                 then: "$data.id"
+    //                             }
+    //                         ],
+    //                         default: null
+    //                     }
+    //                 },
+    //                 sender_id: {
+    //                     $switch: {
+    //                         branches: [
+    //                             {
+    //                                 case: { $eq: ["$type", 6] },
+    //                                 then: "$data.id"
+    //                             },
+    //                             {
+    //                                 case: { $eq: ["$type", 1] },
+    //                                 then: "$data.id"
+    //                             }
+    //                         ],
+    //                         default: null
+    //                     }
+    //                 },
+    //                 user_image: {
+    //                     $switch: {
+    //                         branches: [
+    //                             {
+    //                                 case: { $eq: ["$type", 1] },
+    //                                 then: "$user.image"
+    //                             },
+    //                             {
+    //                                 case: { $eq: ["$type", 2] },
+    //                                 then: "$post_user_image.image"
+    //                             },
+    //                             {
+    //                                 case: { $eq: ["$type", 6] },
+    //                                 then: "$user.image"
+    //                             }
+    //                         ],
+    //                         default: null
+    //                     }
+    //                 },
+    //                 subscription_id: {
+    //                     $cond: {
+    //                         if: { $eq: ["$type", 3] },
+    //                         then: "$data.subscription_id",
+    //                         else: null
+    //                     }
+    //                 },
+    //                 payment_status: {
+    //                     $cond: {
+    //                         if: { $eq: ["$type", 3] },
+    //                         then: "$subscription_data.payment_status",
+    //                         else: null
+    //                     }
+    //                 },
+    //                 ticket_id: {
+    //                     $cond: {
+    //                         if: { $eq: ["$type", 4] },
+    //                         then: "$data.id",
+    //                         else: null
+    //                     }
+    //                 },
+    //                 ticket_status: {
+    //                     $cond: {
+    //                         if: { $eq: ["$type", 4] },
+    //                         then: "$data.status",
+    //                         else: null
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     ])
+    //     const user = await User.findOne({ _id: user_id })
 
-        const adminnotifications = await UserNotification.find({ is_admin: true });
+    //     const adminnotifications = await UserNotification.find({ is_admin: true });
 
-        const filteredNotifications = [];
+    //     const filteredNotifications = [];
 
-        for (let notification of adminnotifications) {
-            if (notification.createdAt > user.createdAt) {
-                filteredNotifications.push(notification);
-            }
-        }
+    //     for (let notification of adminnotifications) {
+    //         if (notification.createdAt > user.createdAt) {
+    //             filteredNotifications.push(notification);
+    //         }
+    //     }
 
-        const mergedNotifications = [...notifications, ...filteredNotifications];
+    //     const mergedNotifications = [...notifications, ...filteredNotifications];
 
-        mergedNotifications.sort((a, b) => b.createdAt - a.createdAt);
+    //     mergedNotifications.sort((a, b) => b.createdAt - a.createdAt);
 
-        return commonUtils.sendSuccess(req, res, mergedNotifications, 200);
-    }
-    catch (err: any) {
-        console.log(err)
-        return commonUtils.sendError(req, res, { message: err.message }, 409);
-    }
+    //     return commonUtils.sendSuccess(req, res, mergedNotifications, 200);
+    // }
+    // catch (err: any) {
+    //     console.log(err)
+    //     return commonUtils.sendError(req, res, { message: err.message }, 409);
+    // }
 }
 
 async function readNoti(req: Request, res: Response) {
