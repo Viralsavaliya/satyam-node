@@ -1,4 +1,6 @@
-const { Agenda } = require('agenda');
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const agenda_1 = require("agenda");
 // import { JobStatus } from './enum';
 // const JobManagement = require('../components/jobManagment/jobManagmentModel');
 // const Job = require('../components/jobs/jobModel');
@@ -9,7 +11,7 @@ const _ = require("underscore");
 const __ = require("lodash");
 // const OneSignal = require("onesignal-node");
 // const client = new OneSignal.Client(config.APP_Id, config.API_Key);
-const agenda = new Agenda({ db: { address: config.get("DB_CONN_STRING") } });
+const agenda = new agenda_1.Agenda({ db: { address: config.get("DB_CONN_STRING") } });
 const Order = require("../components/order/orderModel");
 const Token = require('../components/common/tokenModel');
 // agenda.define('orderStatus',
@@ -17,7 +19,6 @@ const Token = require('../components/common/tokenModel');
 // const { order_id } = job.attrs.data;
 //     const orderManagement = await Order.findById(order_id);
 //     if (orderManagement && orderManagement.order_status === 0) {
-
 //       const notification = {
 //         contents: {
 //           en: "A New BOOZOOM! Order is available!",
@@ -35,14 +36,12 @@ const Token = require('../components/common/tokenModel');
 //         const response = await client.createNotification(notification);
 //       } catch (e) {
 //         if (e instanceof OneSignal.HTTPError) {
-
 //           console.log(e);
 //         }
 //       }
 //     }
 //   }
 // )
-
 // agenda.define('completeStatus',
 //     async (job:any) => {
 //         const {management_id} = job.attrs.data;
@@ -53,7 +52,6 @@ const Token = require('../components/common/tokenModel');
 //         }
 //     }
 // )
-
 // agenda.define('verifyOtp',
 //     async (verify: any) => {
 //         const token = verify.attrs.data.verify;
@@ -63,10 +61,7 @@ const Token = require('../components/common/tokenModel');
 //             verifyToken.otp = "";
 //             verifyToken.save();
 //         }
-
-
 //     }
 // )
 // agenda.start();
-
-export default agenda;
+exports.default = agenda;

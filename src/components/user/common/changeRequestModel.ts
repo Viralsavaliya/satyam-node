@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { AppConstants } from "../../utils/appConstants";
+import { AppConstants } from "../../../utils/appConstants";
 
 const ChangeRequestSchema = new mongoose.Schema({
     userId: {
@@ -19,11 +19,11 @@ const ChangeRequestSchema = new mongoose.Schema({
     },
     token: {
         type: String,
-        default:null
+        default: null
     },
     otp: {
         type: String,
-        default:null
+        default: null
     },
     createdAt: {
         type: Date,

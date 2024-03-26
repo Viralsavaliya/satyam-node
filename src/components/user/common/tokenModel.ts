@@ -1,4 +1,4 @@
-import { AppConstants } from "../../utils/appConstants";
+import { AppConstants } from "../../../utils//appConstants";
 import mongoose, { Schema } from "mongoose";
 
 const TokenSchema = new mongoose.Schema({
