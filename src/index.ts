@@ -120,7 +120,7 @@ app.use(morgan('dev', { skip: (req: any, res: any) => process.env.NODE_ENV === '
 const http = require('http');
 const server = http.createServer(app);
 /* API Routes */
-app.get("/test", function (req: Request, res: Response, next: NextFunction) {
+app.get("/", function (req: Request, res: Response, next: NextFunction) {
     res.send("success")
 });
 /* common image upload */
