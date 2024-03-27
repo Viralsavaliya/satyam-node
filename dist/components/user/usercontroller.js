@@ -45,14 +45,17 @@ const FollowUnfollow = require("../follow/followModel");
 const AppleAuth = require("apple-auth");
 const log4js = require("log4js");
 const logger = log4js.getLogger();
-const appleAuth = new AppleAuth({
-    "client_id": "com.whitetailtactical",
-    "team_id": "MP4BRQ22MX",
-    "key_id": "KN5CUTPN63",
-    "redirect_uri": "https://white.elaunchinfotech.in/auth/apple",
-    "scope": "name email"
-}, fs.readFileSync("./config/AuthKey.p8").toString(), //read the key file
-"text");
+// const appleAuth = new AppleAuth(
+//     {
+//         "client_id": "com.whitetailtactical",
+//         "team_id": "MP4BRQ22MX",
+//         "key_id": "KN5CUTPN63",
+//         "redirect_uri": "https://white.elaunchinfotech.in/auth/apple",
+//         "scope": "name email"
+//     },
+//     fs.readFileSync("./config/AuthKey.p8").toString(), //read the key file
+//     "text"
+// );
 function guestLogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
