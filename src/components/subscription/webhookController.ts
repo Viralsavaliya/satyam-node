@@ -360,7 +360,7 @@ async function inAppWebhook(req: Request, res: Response) {
             await findUser.save();
 
             const type = 3;
-            const auth_id = null;
+            const auth_id: any = null;
             const message = {
                 notification: {
                     title: "Subscription",
@@ -393,7 +393,7 @@ async function inAppWebhook(req: Request, res: Response) {
                     await findUser.save();
 
                     const type = 3;
-                    const auth_id = null;
+                    const auth_id: any = null;
                     const message = {
                         notification: {
                             title: "Subscription",
@@ -434,7 +434,7 @@ async function inAppWebhook(req: Request, res: Response) {
                     await findUser.save();
 
                     const type = 3;
-                    const auth_id = null;
+                    const auth_id: any = null;
                     const message = {
                         notification: {
                             title: "Subscription",
@@ -469,7 +469,7 @@ async function inAppWebhook(req: Request, res: Response) {
                 await findUser.save();
 
                 const type = 3;
-                const auth_id = null;
+                const auth_id: any = null;
                 const message = {
                     notification: {
                         title: "Subscription",
@@ -520,7 +520,7 @@ async function inAppWebhook(req: Request, res: Response) {
                     let findUser = await User.findOne({ _id: new mongoose.Types.ObjectId(newSub.user_id) })
 
                     const type = 3;
-                    const auth_id = null;
+                    const auth_id: any = null;
                     const message = {
                         notification: {
                             title: "Subscription",
