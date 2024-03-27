@@ -38,7 +38,7 @@ const https = require('https');
 const sendRegisterOTP = async (email: string, username: string, subject: string, otp: any, host: string) => {
     // try {
     //     const location_file = path.join(__dirname + '/../emails/verificationEmail.ejs')
-    //     const logo = config.get("LOGO_PATH_LOCAL") + config.get("LOGO_PATH");//"/uploads/images/logo.svg";
+    //     const logo = process.env.LOGO_PATH_LOCAL + process.env.LOGO_PATH;//"/uploads/images/logo.svg";
     //     ejs.renderFile(location_file, { name: username, email: email, otp: otp, subject: subject, logo: logo }, async function (err: any, data: any) {
     //         if (err) {
     //             console.log(111, err);
@@ -76,29 +76,11 @@ const sendRegisterOTP = async (email: string, username: string, subject: string,
 const sendForgetOTP = async (email: string, username: string, subject: string, data: any, host: string) => {
     try {
         const location_file = path.join(__dirname + '/../emails/forgetPasswordOtp.ejs')
-        const logo = config.get("LOGO_PATH_LOCAL") + config.get("LOGO_PATH");//"/uploads/images/logo.svg";
+        const logo = process.env.LOGO_PATH_LOCAL + process.env.LOGO_PATH;//"/uploads/images/logo.svg";
         ejs.renderFile(location_file, { name: username, email: email, otp: data.otp, subject: subject, logo: logo }, async function (err: any, data: any) {
             if (err) {
                 console.log(111, err);
             } else {
-                // const msg = {
-                //     to: email,
-                //     from: 'WhiteTail<noreply@binoxbargains.com>',
-                //     subject: subject,
-                //     text: data.content,
-                //     html: data
-                // };
-                // (async () => {
-                //     try {
-                //         await sgMail.send(msg);
-                //     } catch (error: any) {
-                //         console.error(222, error.message);
-                //         if (error.response) {
-                //             console.error(error.response.body)
-                //         }
-                //     }
-                // })();
-
                 const msg = {
                     from: "WhiteTail<brad@clustersort.com>",
                     to: email,

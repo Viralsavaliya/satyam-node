@@ -520,11 +520,11 @@ const getSavedPostList = async (req: any, res: Response) => {
 }
 const bilList = async (req: any, res: Response) => {
 
-  const {id} = req.query
+  const { id } = req.query
   // const user = await BIL.find({userId: new mongoose.Types.ObjectId(id)}).sort({ createdAt: -1 });
   const user = await BIL.aggregate([
     {
-      $match:{
+      $match: {
         userId: new mongoose.Types.ObjectId(id)
       }
     },
@@ -546,31 +546,31 @@ const bilList = async (req: any, res: Response) => {
     {
       $project: {
         _id: 1,
-        user:'$user_data',
-        Allitem:1,
-        billnumber:1,
-        createdAt:1,
-        millage:1
-        },
+        user: '$user_data',
+        Allitem: 1,
+        billnumber: 1,
+        createdAt: 1,
+        millage: 1
       },
+    },
   ]);
   return commonUtils.sendSuccess(req, res, user);
 };
 
 async function getFacilityUniqId() {
   return new Promise(async (resolve, reject) => {
-      let total_facility = await BIL.count();
-      total_facility = total_facility + 1;
-      let id = "000000"
-      let generatedId = (id + total_facility).slice(-id.length);
-      return resolve(generatedId)
+    let total_facility = await BIL.count();
+    total_facility = total_facility + 1;
+    let id = "000000"
+    let generatedId = (id + total_facility).slice(-id.length);
+    return resolve(generatedId)
   })
 }
 // const createBil = async (req: any, res: Response) => {
 //   try {
 
 //     console.log(req.body);
-    
+
 //     const { userId,bil } =
 //       req.body;
 //       let uniqeId: any = await getFacilityUniqId()
@@ -608,7 +608,7 @@ async function getFacilityUniqId() {
 //     // Trigger the download using res.download
 //     // res.download(pdfBuffer, `${uniqeId}.pdf`);
 
-    
+
 //     return commonUtils.sendSuccess(
 //       req,
 //       res,
@@ -693,9 +693,9 @@ const createBil = async (req: any, res: Response) => {
   try {
     console.log(req.body);
 
-    const { userId, bil , millage } = req.body;
+    const { userId, bil, millage } = req.body;
     console.log(req.body);
-    
+
     const uniqeId: any = await getFacilityUniqId();
     const huntertip = new BIL({
       userId,
@@ -705,7 +705,7 @@ const createBil = async (req: any, res: Response) => {
     });
     await huntertip.save();
 
-   
+
     return commonUtils.sendSuccess(
       req,
       res,
@@ -720,50 +720,50 @@ const createBil = async (req: any, res: Response) => {
 
 async function pdfDownload(req: Request, res: Response) {
   try {
-      const logo = config.get("LOGO_PATH_LOCAL") + config.get("LOGO_PATH");
-      console.log(logo);
-      
-      const location_file = path.join(__dirname, '../pdf.ejs');
-      const data = req.body;
-      
+    const logo = process.env.LOGO_PATH_LOCAL + process.env.LOGO_PATH;
+    console.log(logo);
 
-      data.date_time = moment(data?.createdAt).format("DD MMM hh:mm:A");
+    const location_file = path.join(__dirname, '../pdf.ejs');
+    const data = req.body;
 
-      // Render the EJS template to HTML (replace this with your logic)
-      const htmlContent = await ejs.renderFile(location_file, { data: data,logo:logo });
 
-      // Set PDF options
-      const options = {
-          "height": "11.25in",
-          "width": "8.5in",
-          "header": {
-              "height": "20mm"
-          },
-          "footer": {
-              "height": "20mm",
-          },
-      };
+    data.date_time = moment(data?.createdAt).format("DD MMM hh:mm:A");
 
-      // Convert HTML to PDF
-      pdf.create(htmlContent, options).toBuffer(async (err: any, pdfBuffer: any) => {
-          if (err) {
-              console.error("Error creating PDF:", err);
-              return res.status(500).send({ message: "Failed to generate PDF." });
-          }
+    // Render the EJS template to HTML (replace this with your logic)
+    const htmlContent = await ejs.renderFile(location_file, { data: data, logo: logo });
 
-          // Set headers
-          res.setHeader("Content-Disposition", "attachment; filename=report.pdf");
-          res.setHeader("Content-Type", "application/pdf");
+    // Set PDF options
+    const options = {
+      "height": "11.25in",
+      "width": "8.5in",
+      "header": {
+        "height": "20mm"
+      },
+      "footer": {
+        "height": "20mm",
+      },
+    };
 
-          // Set Content-Length header
-          res.setHeader("Content-Length", pdfBuffer.length);
+    // Convert HTML to PDF
+    pdf.create(htmlContent, options).toBuffer(async (err: any, pdfBuffer: any) => {
+      if (err) {
+        console.error("Error creating PDF:", err);
+        return res.status(500).send({ message: "Failed to generate PDF." });
+      }
 
-          // Send the PDF as response
-          res.send(pdfBuffer);
-      });
+      // Set headers
+      res.setHeader("Content-Disposition", "attachment; filename=report.pdf");
+      res.setHeader("Content-Type", "application/pdf");
+
+      // Set Content-Length header
+      res.setHeader("Content-Length", pdfBuffer.length);
+
+      // Send the PDF as response
+      res.send(pdfBuffer);
+    });
   } catch (err: any) {
-      console.error("Error in pdfDownload:", err);
-      return res.status(500).send({ message: "Internal Server Error." });
+    console.error("Error in pdfDownload:", err);
+    return res.status(500).send({ message: "Internal Server Error." });
   }
 }
 
@@ -772,23 +772,23 @@ async function pdfDownload(req: Request, res: Response) {
 const updateBil = async (req: any, res: Response) => {
   try {
 
-    const id= req.query.id 
+    const id = req.query.id
 
-    const editbil = await BIL.findOne({_id:new mongoose.Types.ObjectId(id)})
+    const editbil = await BIL.findOne({ _id: new mongoose.Types.ObjectId(id) })
 
     if (!editbil) {
       return commonUtils.sendError(req, res, { message: "Bil not found" }, 404);
     }
 
-    
-    const { bil , millage } =req.body;
+
+    const { bil, millage } = req.body;
     console.log(req.body);
-    
-    
+
+
     editbil.Allitem = bil,
-    editbil.millage = millage,
-    
-    await editbil.save();
+      editbil.millage = millage,
+
+      await editbil.save();
     return commonUtils.sendSuccess(
       req,
       res,
@@ -910,7 +910,7 @@ async function changetutorialStatus(req: Request, res: Response) {
 }
 async function updateTutorial(req: Request, res: Response) {
   try {
-    const { item,amount } = req.body;
+    const { item, amount } = req.body;
     const items = await Item.findOne({ _id: req.query.id });
     items.item = item;
     items.amount = amount;

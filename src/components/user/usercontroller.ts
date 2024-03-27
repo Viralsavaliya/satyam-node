@@ -109,15 +109,15 @@ async function edituser(req: Request, res: Response) {
 
 
     // const userData = {
-        user.name= req.body.name ? req.body.name : user.name,
-        user.email= req.body.email ? req.body.email : user.email,
-        user.carnumber= req.body.carnumber ? req.body.carnumber : user.carnumber,
-        user.mobile= req.body.mobile ? req.body.mobile : user.mobile,
-        user.mobile2= req.body.mobile2 ? req.body.mobile2 : user.mobile2
-        user.model= req.body.model ? req.body.model : user.model
-        user.chassisno= req.body.chassisno ? req.body.chassisno : user.chassisno
-        user.engineno= req.body.engineno ? req.body.engineno : user.engineno
-        user.address= req.body.address ? req.body.address : user.address
+    user.name = req.body.name ? req.body.name : user.name,
+        user.email = req.body.email ? req.body.email : user.email,
+        user.carnumber = req.body.carnumber ? req.body.carnumber : user.carnumber,
+        user.mobile = req.body.mobile ? req.body.mobile : user.mobile,
+        user.mobile2 = req.body.mobile2 ? req.body.mobile2 : user.mobile2
+    user.model = req.body.model ? req.body.model : user.model
+    user.chassisno = req.body.chassisno ? req.body.chassisno : user.chassisno
+    user.engineno = req.body.engineno ? req.body.engineno : user.engineno
+    user.address = req.body.address ? req.body.address : user.address
     // };
 
     try {
@@ -389,7 +389,7 @@ async function signupVerifyOtp(req: Request, res: Response) {
 
         await new Promise((resolve, reject) => {
 
-            jwt.verify(token, config.get("JWT_ACCESS_SECRET"), async (err: any, user: any) => {
+            jwt.verify(token, process.env.JWT_ACCESS_SECRET, async (err: any, user: any) => {
                 if (err) {
                     console.log('signupVerifyOtp-err', err)
                     if (err.name == "TokenExpiredError") {
@@ -400,8 +400,8 @@ async function signupVerifyOtp(req: Request, res: Response) {
                         return commonUtils.sendError(req, res, { message: AppStrings.INVALID_SESSION }, 409);
                     }
                 } else {
-                    let midLayer = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
-                    const userData = JSON.parse(aes.decrypt(midLayer.toString(), config.get("OUTER_KEY_USER")));
+                    let midLayer = aes.decrypt(user.sub, process.env.OUTER_KEY_PAYLOAD)
+                    const userData = JSON.parse(aes.decrypt(midLayer.toString(), process.env.OUTER_KEY_USER));
                     if (userData?.otp != otp) return commonUtils.sendError(req, res, { message: AppStrings.INVALID_OTP }, 409);
 
                     let userObj = {
@@ -527,7 +527,7 @@ const sendVerifyOTP = async (username: string, userId: any, credential: any, dev
                 content: content,
                 message: "Your email has been verified!"
             },
-            sender: config.MAIL_SENDER_NO_REPLY,
+            sender: process.env.MAIL_SENDER_NO_REPLY,
             host: host
         });
 
@@ -609,7 +609,7 @@ async function getJWTOken(req: any, res: any, otp: any) {
     const token = tokens_[1];
     await new Promise((resolve, reject) => {
 
-        jwt.verify(token, config.get("JWT_ACCESS_SECRET"), async (err: any, user: any) => {
+        jwt.verify(token, process.env.JWT_ACCESS_SECRET, async (err: any, user: any) => {
             if (err) {
                 console.log('err', err)
                 if (err.name == "TokenExpiredError") {
@@ -618,8 +618,8 @@ async function getJWTOken(req: any, res: any, otp: any) {
                     return commonUtils.sendError(req, res, { message: AppStrings.INVALID_SESSION }, 409);
                 }
             } else {
-                let midLayer = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
-                const userData = JSON.parse(aes.decrypt(midLayer.toString(), config.get("OUTER_KEY_USER")));
+                let midLayer = aes.decrypt(user.sub, process.env.OUTER_KEY_PAYLOAD)
+                const userData = JSON.parse(aes.decrypt(midLayer.toString(), process.env.OUTER_KEY_USER));
                 // let tokens: [] = await redisClient.lrange(midLayer.toString(), 0, -1)
                 // let index = tokens.findIndex(value => JSON.parse(value).accessToken.toString() == token.toString())
 
@@ -1480,7 +1480,7 @@ async function blockUserList(req: Request, res: Response) {
         const auth_id = req.headers.userid;
 
         console.log(auth_id);
-        
+
 
         const blockuserlist = await BlockUser.aggregate([
             {

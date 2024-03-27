@@ -19,14 +19,13 @@ const register = async (user_data: any, userType: any, otp: any) => {
             "userData": user_data,
             "userType": userType,
             "otp": otp
-        }), config.get("OUTER_KEY_USER"))
+        }), process.env.OUTER_KEY_USER)
 
-    let payload = await aes.encrypt(uniqueUserKey, config.get("OUTER_KEY_PAYLOAD"))
+    let payload = await aes.encrypt(uniqueUserKey, process.env.OUTER_KEY_PAYLOAD)
 
-    const accessToken = jwt.sign({ sub: payload }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_ACCESS_TIME") });
+    const accessToken = jwt.sign({ sub: payload }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
     const refreshToken = await generateRefreshToken(payload);
     let data = { accessToken: accessToken, refreshToken: refreshToken }
-    // await redisClient.lpush(uniqueUserKey.toString(), JSON.stringify(data));
 
     return data;
 }
@@ -36,7 +35,7 @@ const login = async (userId: ObjectId, createdAt: Date) => {
         JSON.stringify({
             "userId": userId,
             "createdAt": createdAt
-        }), config.get("OUTER_KEY_USER"))
+        }), process.env.OUTER_KEY_USER)
 
     // const oldValue = await redisClient.get('user_' + userId)
 
@@ -44,9 +43,9 @@ const login = async (userId: ObjectId, createdAt: Date) => {
     //     await logoutforalreadylogin(JSON.parse(oldValue).accessToken);
     // }
 
-    let payload = await aes.encrypt(uniqueUserKey, config.get("OUTER_KEY_PAYLOAD"))
+    let payload = await aes.encrypt(uniqueUserKey, process.env.OUTER_KEY_PAYLOAD)
 
-    const accessToken = jwt.sign({ sub: payload }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_ACCESS_TIME") });
+    const accessToken = jwt.sign({ sub: payload }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
 
     const refreshToken = await generateRefreshToken(payload);
 
@@ -62,11 +61,11 @@ const adminLogin = async (userId: ObjectId, createdAt: Date) => {
         JSON.stringify({
             "userId": userId,
             "createdAt": createdAt
-        }), config.get("OUTER_KEY_USER"))
+        }), process.env.OUTER_KEY_USER)
 
-    let payload = await aes.encrypt(uniqueUserKey, config.get("OUTER_KEY_PAYLOAD"))
+    let payload = await aes.encrypt(uniqueUserKey, process.env.OUTER_KEY_PAYLOAD)
 
-    const accessToken = jwt.sign({ sub: payload }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_ACCESS_TIME") });
+    const accessToken = jwt.sign({ sub: payload }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
 
     const refreshToken = await generateRefreshToken(payload);
 
@@ -84,11 +83,11 @@ const logout = async (req: any, res: Response) => {
     }
     const token = tokens_[1];
 
-    jwt.verify(token, config.get("JWT_ACCESS_SECRET"), async (err: any, user: any) => {
+    jwt.verify(token, process.env.JWT_ACCESS_SECRET, async (err: any, user: any) => {
         if (err) {
             return commonUtils.sendError(req, res, { message: AppStrings.INVALID_TOKEN }, 401);
         } else {
-            const uniqueUserKey = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
+            const uniqueUserKey = aes.decrypt(user.sub, process.env.OUTER_KEY_PAYLOAD)
 
             // let tokens: [] = await redisClient.lrange(uniqueUserKey.toString(), 0, -1)
 
@@ -106,11 +105,11 @@ const logout = async (req: any, res: Response) => {
 
 const logoutforalreadylogin = async (token: any) => {
 
-    jwt.verify(token, config.get("JWT_ACCESS_SECRET"), async (err: any, user: any) => {
+    jwt.verify(token, process.env.JWT_ACCESS_SECRET, async (err: any, user: any) => {
         if (err) {
             console.log(err)
         } else {
-            const uniqueUserKey = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
+            const uniqueUserKey = aes.decrypt(user.sub, process.env.OUTER_KEY_PAYLOAD)
 
             // let tokens: [] = await redisClient.lrange(uniqueUserKey.toString(), 0, -1)
 
@@ -127,11 +126,11 @@ const logoutforalreadylogin = async (token: any) => {
 
 const getAccessTokenPromise = async (oldToken: any) => {
     return new Promise((resolve, reject) => {
-        jwt.verify(oldToken, config.get("JWT_REFRESH_SECRET"), async (err: any, user: any) => {
+        jwt.verify(oldToken, process.env.JWT_REFRESH_SECRET, async (err: any, user: any) => {
             if (err) {
                 return reject({ status: 401 });
             } else {
-                const uniqueUserKey = aes.decrypt(user.sub, config.get("OUTER_KEY_PAYLOAD"))
+                const uniqueUserKey = aes.decrypt(user.sub, process.env.OUTER_KEY_PAYLOAD)
 
                 // let tokens: [] = await redisClient.lrange(uniqueUserKey, 0, -1)
                 // let token_ = tokens.find(value => JSON.parse(value).refreshToken.toString() == oldToken.toString())
@@ -140,9 +139,9 @@ const getAccessTokenPromise = async (oldToken: any) => {
 
                 // let index = tokens.findIndex(value => JSON.parse(value).refreshToken.toString() == oldToken.toString())
 
-                let payload = aes.encrypt(uniqueUserKey.toString(), config.get("OUTER_KEY_PAYLOAD"))
+                let payload = aes.encrypt(uniqueUserKey.toString(), process.env.OUTER_KEY_PAYLOAD)
 
-                const accessToken = jwt.sign({ sub: payload }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_ACCESS_TIME") });
+                const accessToken = jwt.sign({ sub: payload }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
                 const refreshToken = await generateRefreshToken(payload);
 
                 let data = { accessToken: accessToken, refreshToken: refreshToken }
@@ -186,25 +185,25 @@ const getAdminRefreshToken = async (req: any, res: Response) => {
 }
 
 const generateRefreshToken = async (payload: string) => {
-    return jwt.sign({ sub: payload }, config.get("JWT_REFRESH_SECRET"), { expiresIn: config.get("JWT_REFRESH_TIME") });
+    return jwt.sign({ sub: payload }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME });
 }
 
 const _generateAccessToken = async (payload: string, role: UserTokenRole | UserTokenRole[]) => {
-    return Jwt.sign({ sub: payload, aud: role }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_ACCESS_TIME") });
+    return Jwt.sign({ sub: payload, aud: role }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
 }
 
 const _generateRefreshToken = async (payload: string) => {
-    return Jwt.sign({ sub: payload, aud: UserTokenRole.refreshToken }, config.get("JWT_ACCESS_SECRET"), { expiresIn: config.get("JWT_REFRESH_TIME") });
+    return Jwt.sign({ sub: payload, aud: UserTokenRole.refreshToken }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME });
 }
 const encryptPayload = (data: object) => {
-    let encryptedData = aes.encrypt(JSON.stringify(data), config.get("OUTER_KEY_USER"))
-    let payload = aes.encrypt(encryptedData, config.get("OUTER_KEY_PAYLOAD"))
+    let encryptedData = aes.encrypt(JSON.stringify(data), process.env.OUTER_KEY_USER)
+    let payload = aes.encrypt(encryptedData, process.env.OUTER_KEY_PAYLOAD)
     return { data: encryptedData, payload: payload }
 }
 
 const decryptPayload = (payload: string) => {
-    let decryptedPayload = aes.decrypt(payload, config.get("OUTER_KEY_PAYLOAD"))
-    let decryptedData = aes.decrypt(decryptedPayload, config.get("OUTER_KEY_USER"))
+    let decryptedPayload = aes.decrypt(payload, process.env.OUTER_KEY_PAYLOAD)
+    let decryptedData = aes.decrypt(decryptedPayload, process.env.OUTER_KEY_USER)
     return { data: JSON.parse(decryptedData), decryptedPayload }
 }
 

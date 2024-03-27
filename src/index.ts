@@ -1,3 +1,4 @@
+require('dotenv').config()
 var morgan = require('morgan');
 import path from "path";
 const config = require("config");
@@ -202,16 +203,11 @@ app.prefix("/api", (route: any) => {
     reportRoute(route);
 });
 
-// var os = require("os");
-
-server.listen(config.get("PORT"), () => {
-    // var hostname = os.hostname();
-    // console.log({hostname})
-    console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${config.get("PORT")}`)
+server.listen(process.env.PORT, () => {
+    console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${process.env.PORT}`)
 
     mongoose.connect(
-        config.get("DB_CONN_STRING"),
+        process.env.DB_CONN_STRING,
         () => console.log('connected to mongodb.')
     );
-    // redisClient.on('error', (err: any) => console.log('Redis Client Error', err));
 });

@@ -9,7 +9,7 @@ const _ = require("underscore");
 const __ = require("lodash");
 // const OneSignal = require("onesignal-node");
 // const client = new OneSignal.Client(config.APP_Id, config.API_Key);
-const agenda = new Agenda({ db: { address: config.get("DB_CONN_STRING") } });
+const agenda = new Agenda({ db: { address: process.env.DB_CONN_STRING } });
 const Order = require("../components/order/orderModel");
 const Token = require('../components/common/tokenModel');
 // agenda.define('orderStatus',

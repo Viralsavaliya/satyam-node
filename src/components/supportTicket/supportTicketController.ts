@@ -51,7 +51,7 @@ async function changeStatus(req: Request, res: Response) {
 
         if (support.status == 2) {
             const user = await User.findOne({ _id: support.user_id })
-            const auth_id = null;
+            const auth_id: any = null;
             const noti_type = 4;
             const msg = {
                 notification: {
@@ -147,7 +147,7 @@ async function sendMessage(req: Request, res: Response) {
         }
 
         const user = await User.findOne({ _id: user_id })
-        const auth_id = null;
+        const auth_id: any = null;
         const noti_type = 4;
         const msg = {
             notification: {
