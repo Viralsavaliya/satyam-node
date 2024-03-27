@@ -2,7 +2,6 @@
 /*.dio
 /uploads
 /dist
-/build
 .env
 
 *-lock.json
