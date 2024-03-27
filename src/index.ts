@@ -121,7 +121,7 @@ app.use(morgan('dev'));
 const http = require('http');
 const server = http.createServer(app);
 /* API Routes */
-app.get("/", function (req: Request, res: Response, next: NextFunction) {
+app.get("/test", function (req: Request, res: Response, next: NextFunction) {
     res.send("success")
 });
 /* common image upload */
