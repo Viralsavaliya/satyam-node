@@ -116,7 +116,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads/')))
 
-app.use(morgan('dev', { skip: (req: any, res: any) => process.env.NODE_ENV === 'production' }));
+app.use(morgan('dev'));
 
 const http = require('http');
 const server = http.createServer(app);
