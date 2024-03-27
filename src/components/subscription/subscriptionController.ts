@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import commonUtils from "../../utils/commonUtils";
 import { AppStrings } from "../../utils/appStrings";
 import commoncontroller from "../common/commoncontroller";
-const config = require("config");
+// const config = require("config");
 const mongoose = require("mongoose");
 const Subscription = require('./subscriptionModel');
 const User = require('../user/userModel');

@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import { UserType } from "../utils/enum";
 import { AppStrings } from "../utils/appStrings";
 const jwt = require('jsonwebtoken');
-const config = require("config");
+// const config = require("config");
 type ObjectId = mongoose.Schema.Types.ObjectId;
 
 import * as Jwt from 'jsonwebtoken';

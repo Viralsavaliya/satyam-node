@@ -2,7 +2,7 @@ const { Agenda } = require('agenda');
 // import { JobStatus } from './enum';
 // const JobManagement = require('../components/jobManagment/jobManagmentModel');
 // const Job = require('../components/jobs/jobModel');
-const config = require("config");
+// const config = require("config");
 // const activeStatus = [JobStatus.ACCEPT_BY_PROVIDER,JobStatus.ACCEPT_BY_SEEKER]            
 const Mongoose = require("mongoose");
 const _ = require("underscore");

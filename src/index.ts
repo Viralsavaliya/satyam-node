@@ -1,7 +1,7 @@
 require('dotenv').config()
 var morgan = require('morgan');
 import path from "path";
-const config = require("config");
+// const config = require("config");
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
 const express = require('express')

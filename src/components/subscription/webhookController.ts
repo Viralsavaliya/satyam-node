@@ -3,7 +3,7 @@ import commonUtils from "../../utils/commonUtils";
 import commoncontroller from "../common/commoncontroller";
 
 const { format } = require('date-fns');
-const config = require("config");
+// const config = require("config");
 const UserSubscription = require('../subscription/userSubscriptionModel');
 const User = require('../user/userModel');
 const TempUserSubscription = require('../subscription/TempUserSubscription');

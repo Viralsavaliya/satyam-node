@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
-const config = require("config");
+// const config = require("config");
 const ejs = require("ejs");
 const path = require("path");
 const mailgun = require("mailgun-js");
