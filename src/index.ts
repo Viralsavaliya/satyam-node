@@ -179,28 +179,28 @@ app.get('/api/apple-app-site-association', (req: any, res: any) => {
 // app.prefix("/admin", (route: any) => {
 //     adminRoute(route);
 // });
-// app.prefix("/api/admin", (route: any) => {
-//     adminRoute(route);
-//     contactRoute(route);
-//     aboutRoute(route);
-//     supportRoute(route);
-//     cmsRoute(route);
-// });
-// app.prefix("/api/user", (route: any) => {
-//     userRoute(route);
-// });
-// app.prefix("/api/post", (route: any) => {
-//     postRoute(route);
-// });
-// app.prefix("/api/setting", (route: any) => {
-//     settingRoute(route);
-// });
-// app.prefix("/api", (route: any) => {
-//     followRoute(route);
-//     likeRoute(route);
-//     subscriptionRoute(route);
-//     reportRoute(route);
-// });
+app.prefix("/api/admin", (route: any) => {
+    adminRoute(route);
+    contactRoute(route);
+    aboutRoute(route);
+    supportRoute(route);
+    cmsRoute(route);
+});
+app.prefix("/api/user", (route: any) => {
+    userRoute(route);
+});
+app.prefix("/api/post", (route: any) => {
+    postRoute(route);
+});
+app.prefix("/api/setting", (route: any) => {
+    settingRoute(route);
+});
+app.prefix("/api", (route: any) => {
+    followRoute(route);
+    likeRoute(route);
+    subscriptionRoute(route);
+    reportRoute(route);
+});
 
 server.listen(process.env.PORT, () => {
     console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${process.env.PORT}`)
