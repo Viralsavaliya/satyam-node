@@ -2,8 +2,6 @@ import crypto from "crypto";
 import { Request, Response } from "express"
 import commonUtils from "../../utils/commonUtils";
 
-const config = require("config")
-
 const API_KEY_ENC = process.env.API_KEY_ENC
 const API_ENCRYPT_VI_KEY = process.env.API_ENCRYPT_VI_KEY
 

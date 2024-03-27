@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var morgan = require('morgan');
 const path_1 = __importDefault(require("path"));
-const config = require("config");
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
 const express = require('express');

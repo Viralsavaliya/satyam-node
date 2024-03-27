@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express"
 import { AppStrings } from "../../utils/appStrings";
 import commonUtils from "../../utils/commonUtils";
 
-const config = require("config")
 const jwt = require('jsonwebtoken')
 // import redisClient from "../../utils/redisHelper"; 
 import aes from "../../utils/aes";

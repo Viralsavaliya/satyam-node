@@ -22,7 +22,7 @@ const Aboutus = require('../aboutUs/aboutUsModel');
 const BlockUser = require('../user/blockUserModel');
 const Token = require('../../components/common/tokenModel');
 const mongoose = require("mongoose");
-const config = require("config");
+// const config = require("config");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const { google } = require('googleapis');
@@ -482,7 +482,7 @@ function getOTP(req, res) {
             }
             let resetToken = crypto.randomBytes(64).toString("hex");
             resetToken = yield generateUniqueToken(resetToken);
-            const hash_ = yield bcrypt.hash(resetToken, Number(config.get('saltRounds')));
+            const hash_ = yield bcrypt.hash(resetToken, Number(10));
             yield Token.deleteOne({ userId: new mongoose.Types.ObjectId(user._id) });
             var d = new Date();
             d.setSeconds(d.getSeconds() + 120);
@@ -523,7 +523,7 @@ const sendVerifyOTP = (username, userId, credential, device, reason, subject, ho
         if (generateToken) {
             let resetToken = crypto.randomBytes(64).toString("hex");
             resetToken = yield generateUniqueToken(resetToken);
-            const hash_ = yield bcrypt.hash(resetToken, Number(config.get('saltRounds')));
+            const hash_ = yield bcrypt.hash(resetToken, 10);
             yield Token.deleteOne({ userId });
             var d = new Date();
             d.setSeconds(d.getSeconds() + 120);

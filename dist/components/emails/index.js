@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const nodemailer = require("nodemailer");
-const config = require("config");
+// const config = require("config");
 const ejs = require("ejs");
 const path = require("path");
 const mailgun = require("mailgun-js");

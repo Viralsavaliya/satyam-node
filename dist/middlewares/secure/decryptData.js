@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const commonUtils_1 = __importDefault(require("../../utils/commonUtils"));
-const config = require("config");
 const appStrings_1 = require("../../utils/appStrings");
 const crypto = require("crypto");
 const Admin = require("../../components/admin/models/adminModel");

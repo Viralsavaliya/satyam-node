@@ -1,5 +1,3 @@
-const config = require("config")
-
 export const AppConstants = {
     "API_ROUTE_SOCKET": "",
     "USER_IMAGE_PATH": process.env.ROUTE_URL + "/uploads/images/",

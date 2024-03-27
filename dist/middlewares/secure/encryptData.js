@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = __importDefault(require("crypto"));
-const config = require("config");
 const API_KEY_ENC = process.env.API_KEY_ENC;
 const API_ENCRYPT_VI_KEY = process.env.API_ENCRYPT_VI_KEY;
 function encryptedDataResponse(data) {

@@ -1,6 +1,5 @@
 import commonUtils from "../../utils/commonUtils";
 
-const config = require("config")
 import { NextFunction, Request, Response } from "express"
 import { AppStrings } from "../../utils/appStrings";
 

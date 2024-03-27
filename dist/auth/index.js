@@ -39,7 +39,6 @@ const commonUtils_1 = __importDefault(require("../utils/commonUtils"));
 const aes_1 = __importDefault(require("../utils/aes"));
 const appStrings_1 = require("../utils/appStrings");
 const jwt = require('jsonwebtoken');
-const config = require("config");
 const Jwt = __importStar(require("jsonwebtoken"));
 const models_1 = require("./models");
 const register = (user_data, userType, otp) => __awaiter(void 0, void 0, void 0, function* () {

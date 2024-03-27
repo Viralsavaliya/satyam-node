@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppConstants = void 0;
-const config = require("config");
 exports.AppConstants = {
     "API_ROUTE_SOCKET": "",
     "USER_IMAGE_PATH": process.env.ROUTE_URL + "/uploads/images/",

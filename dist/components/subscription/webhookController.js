@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commonUtils_1 = __importDefault(require("../../utils/commonUtils"));
 const commoncontroller_1 = __importDefault(require("../common/commoncontroller"));
 const { format } = require('date-fns');
-const config = require("config");
+// const config = require("config");
 const UserSubscription = require('../subscription/userSubscriptionModel');
 const User = require('../user/userModel');
 const TempUserSubscription = require('../subscription/TempUserSubscription');

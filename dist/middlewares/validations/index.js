@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const appStrings_1 = require("../../utils/appStrings");
 const commonUtils_1 = __importDefault(require("../../utils/commonUtils"));
-const config = require("config");
 const jwt = require('jsonwebtoken');
 // import redisClient from "../../utils/redisHelper"; 
 const aes_1 = __importDefault(require("../../utils/aes"));
