@@ -30,37 +30,37 @@ process.on('unhandledRejection', (reason, promise) => {
     console.log(reason)
 })
 
-log4js.configure({
-    appenders: {
-        console: {
-            "type": "console",
-            "category": "console"
-        },
-        everything: {
-            type: 'dateFile',
-            pattern: "yyyy-MM-dd",
-            keepFileExt: true,
-            maxLogSize: 1024 * 1024 * 1,
-            alwaysIncludePattern: true,
-            daysToKeep: 3,
-            filename: './logger/white-tail.log',
-            backups: 3,
-            compress: true,
-            MaxNumberOfDays: 1
-        }
-    },
-    "categories": {
-        "default": {
-            "appenders": [
-                "everything",
-                "console"
-            ],
-            "level": "ALL"
-        }
-    },
-    "pm2": true,
-    "replaceConsole": true
-});
+// log4js.configure({
+//     appenders: {
+//         console: {
+//             "type": "console",
+//             "category": "console"
+//         },
+//         everything: {
+//             type: 'dateFile',
+//             pattern: "yyyy-MM-dd",
+//             keepFileExt: true,
+//             maxLogSize: 1024 * 1024 * 1,
+//             alwaysIncludePattern: true,
+//             daysToKeep: 3,
+//             filename: './logger/white-tail.log',
+//             backups: 3,
+//             compress: true,
+//             MaxNumberOfDays: 1
+//         }
+//     },
+//     "categories": {
+//         "default": {
+//             "appenders": [
+//                 "everything",
+//                 "console"
+//             ],
+//             "level": "ALL"
+//         }
+//     },
+//     "pm2": true,
+//     "replaceConsole": true
+// });
 
 express.application.prefix = express.Router.prefix = function (path: any, configure: any) {
     var router = express.Router();
