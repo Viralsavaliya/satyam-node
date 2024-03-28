@@ -12,9 +12,6 @@ const __ = require("lodash");
 const rateLimit = require('express-rate-limit');
 
 import { NextFunction, Request, Response } from "express";
-// import corsOptions from "./utils/corsOptions";
-// import commoncontroller from "./components/common/commoncontroller
-const log4js = require("log4js");
 
 process.on('uncaughtException', (error, origin) => {
     console.log('----- Uncaught exception -----')
@@ -29,38 +26,6 @@ process.on('unhandledRejection', (reason, promise) => {
     console.log('----- Reason -----')
     console.log(reason)
 })
-
-// log4js.configure({
-//     appenders: {
-//         console: {
-//             "type": "console",
-//             "category": "console"
-//         },
-//         everything: {
-//             type: 'dateFile',
-//             pattern: "yyyy-MM-dd",
-//             keepFileExt: true,
-//             maxLogSize: 1024 * 1024 * 1,
-//             alwaysIncludePattern: true,
-//             daysToKeep: 3,
-//             filename: './logger/white-tail.log',
-//             backups: 3,
-//             compress: true,
-//             MaxNumberOfDays: 1
-//         }
-//     },
-//     "categories": {
-//         "default": {
-//             "appenders": [
-//                 "everything",
-//                 "console"
-//             ],
-//             "level": "ALL"
-//         }
-//     },
-//     "pm2": true,
-//     "replaceConsole": true
-// });
 
 express.application.prefix = express.Router.prefix = function (path: any, configure: any) {
     var router = express.Router();
@@ -103,59 +68,6 @@ const server = http.createServer(app);
 app.get("/test", function (req: Request, res: Response, next: NextFunction) {
     res.send("success")
 });
-
-app.get('/api/apple-app-site-association', (req: any, res: any) => {
-    const data: any = {
-        "activitycontinuation": {
-            "apps": [
-                "KDN6755NM3.com.whitetailtactical.trading"
-            ]
-        },
-        "webcredentials": {
-            "apps": [
-                "KDN6755NM3.com.whitetailtactical.trading"
-            ]
-        },
-        "applinks": {
-            "apps": [
-
-            ],
-            "details": [
-                {
-                    "appID": "KDN6755NM3.com.whitetailtactical.trading",
-                    "paths": [
-                        "*"
-                    ]
-                }
-            ]
-        }
-    }
-    res.set('Content-Type', 'application/pkcs7-mime')
-    return res.status(200).send(data);
-})
-
-// app.prefix("/api/admin", (route: any) => {
-//     adminRoute(route);
-//     contactRoute(route);
-//     aboutRoute(route);
-//     supportRoute(route);
-//     cmsRoute(route);
-// });
-// app.prefix("/api/user", (route: any) => {
-//     userRoute(route);
-// });
-// app.prefix("/api/post", (route: any) => {
-//     postRoute(route);
-// });
-// app.prefix("/api/setting", (route: any) => {
-//     settingRoute(route);
-// });
-// app.prefix("/api", (route: any) => {
-//     followRoute(route);
-//     likeRoute(route);
-//     subscriptionRoute(route);
-//     reportRoute(route);
-// });
 
 server.listen(process.env.PORT, () => {
     console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${process.env.PORT}`)
