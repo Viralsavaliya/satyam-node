@@ -13,6 +13,7 @@ const rateLimit = require('express-rate-limit');
 
 import { NextFunction, Request, Response } from "express";
 
+/* for prevent crash */
 process.on('uncaughtException', (error, origin) => {
     console.log('----- Uncaught exception -----')
     console.log(error)
@@ -44,14 +45,6 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
-const apiLimiter = rateLimit({
-    windowMs: 60 * 1000,
-    max: 5,
-});
-
-const userRouter = express.Router();
-userRouter.use(apiLimiter);
-
 app.use(cors())
 app.use(cookieParser());
 
@@ -68,6 +61,36 @@ const server = http.createServer(app);
 app.get("/test", function (req: Request, res: Response, next: NextFunction) {
     res.send("success")
 });
+
+app.get('/api/apple-app-site-association', (req: any, res: any) => {
+    const data: any = {
+        "activitycontinuation": {
+            "apps": [
+                "KDN6755NM3.com.whitetailtactical.trading"
+            ]
+        },
+        "webcredentials": {
+            "apps": [
+                "KDN6755NM3.com.whitetailtactical.trading"
+            ]
+        },
+        "applinks": {
+            "apps": [
+
+            ],
+            "details": [
+                {
+                    "appID": "KDN6755NM3.com.whitetailtactical.trading",
+                    "paths": [
+                        "*"
+                    ]
+                }
+            ]
+        }
+    }
+    res.set('Content-Type', 'application/pkcs7-mime')
+    return res.status(200).send(data);
+})
 
 server.listen(process.env.PORT, () => {
     console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${process.env.PORT}`)
