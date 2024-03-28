@@ -13,27 +13,24 @@ const rateLimit = require('express-rate-limit');
 
 import { NextFunction, Request, Response } from "express";
 import corsOptions from "./utils/corsOptions";
-import commoncontroller from "./components/common/commoncontroller";
+// import commoncontroller from "./components/common/commoncontroller";
 
-import adminRoute from "./components/admin/index";
-// import adminRoute from "./components/admin";
-import userRoute from "./components/user";
-import postRoute from "./components/post";
-import followRoute from "./components/follow";
-import likeRoute from "./components/like";
-import contactRoute from "./components/contactUs";
-import subscriptionRoute from "./components/subscription";
-import aboutRoute from "./components/aboutUs";
-import supportRoute from "./components/supportTicket";
-import cmsRoute from "./components/cms";
-import settingRoute from "./components/userSetting";
-import reportRoute from "./components/report";
-import webhookController from "./components/subscription/webhookController";
-import subscriptionController from "./components/subscription/subscriptionController";
-// import commonController from "./components/common/commonController";
+// import adminRoute from "./components/admin/index";
+// import userRoute from "./components/user";
+// import postRoute from "./components/post";
+// import followRoute from "./components/follow";
+// import likeRoute from "./components/like";
+// import contactRoute from "./components/contactUs";
+// import subscriptionRoute from "./components/subscription";
+// import aboutRoute from "./components/aboutUs";
+// import supportRoute from "./components/supportTicket";
+// import cmsRoute from "./components/cms";
+// import settingRoute from "./components/userSetting";
+// import reportRoute from "./components/report";
+// import webhookController from "./components/subscription/webhookController";
+// import subscriptionController from "./components/subscription/subscriptionController";
 const log4js = require("log4js");
 
-/* for prevent crash */
 process.on('uncaughtException', (error, origin) => {
     console.log('----- Uncaught exception -----')
     console.log(error)
@@ -57,12 +54,11 @@ log4js.configure({
         everything: {
             type: 'dateFile',
             pattern: "yyyy-MM-dd",
-            keepFileExt: true,  //
-            maxLogSize: 1024 * 1024 * 1, //1024 * 1024 * 1 = 1M
-            alwaysIncludePattern: true,     //
-            daysToKeep: 3, //
+            keepFileExt: true,
+            maxLogSize: 1024 * 1024 * 1,
+            alwaysIncludePattern: true,
+            daysToKeep: 3,
             filename: './logger/white-tail.log',
-            // maxLogSize: 10485760,
             backups: 3,
             compress: true,
             MaxNumberOfDays: 1
@@ -98,10 +94,9 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
-// set request limit
 const apiLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 5, // Allow only 5 request per minute
+    windowMs: 60 * 1000,
+    max: 5,
 });
 
 const userRouter = express.Router();
@@ -119,32 +114,10 @@ app.use(morgan('dev'));
 
 const http = require('http');
 const server = http.createServer(app);
-/* API Routes */
+
 app.get("/test", function (req: Request, res: Response, next: NextFunction) {
     res.send("success")
 });
-/* common image upload */
-// app.post("/api/uploadImage/:type", async function (req: Request, res: Response, next: NextFunction) {
-//     await commoncontroller.uploadImage(req, res, next);
-// });
-
-// app.post("/api/uploadSupportFiles", async function (req: Request, res: Response, next: NextFunction) {
-//     await commoncontroller.uploadSupportFiles(req, res, next);
-// });
-
-// app.use('/api/inAppPurchase', userRouter);
-
-// app.post("/api/inAppPurchase", async function (req: Request, res: Response) {
-//     await subscriptionController.inAppPurchase(req, res);
-// });
-
-// app.post("/api/webHook", express.raw({ type: 'application/json' }), async function (req: Request, res: Response) {
-//     await webhookController.webHook(req, res);
-// })
-
-// app.post("/inAppWebhookNew", express.raw({ type: 'application/json' }), async function (req: Request, res: Response) {
-//     await webhookController.inAppWebhook(req, res);
-// })
 
 app.get('/api/apple-app-site-association', (req: any, res: any) => {
     const data: any = {
@@ -176,31 +149,28 @@ app.get('/api/apple-app-site-association', (req: any, res: any) => {
     return res.status(200).send(data);
 })
 
-// app.prefix("/admin", (route: any) => {
+// app.prefix("/api/admin", (route: any) => {
 //     adminRoute(route);
+//     contactRoute(route);
+//     aboutRoute(route);
+//     supportRoute(route);
+//     cmsRoute(route);
 // });
-app.prefix("/api/admin", (route: any) => {
-    adminRoute(route);
-    contactRoute(route);
-    aboutRoute(route);
-    supportRoute(route);
-    cmsRoute(route);
-});
-app.prefix("/api/user", (route: any) => {
-    userRoute(route);
-});
-app.prefix("/api/post", (route: any) => {
-    postRoute(route);
-});
-app.prefix("/api/setting", (route: any) => {
-    settingRoute(route);
-});
-app.prefix("/api", (route: any) => {
-    followRoute(route);
-    likeRoute(route);
-    subscriptionRoute(route);
-    reportRoute(route);
-});
+// app.prefix("/api/user", (route: any) => {
+//     userRoute(route);
+// });
+// app.prefix("/api/post", (route: any) => {
+//     postRoute(route);
+// });
+// app.prefix("/api/setting", (route: any) => {
+//     settingRoute(route);
+// });
+// app.prefix("/api", (route: any) => {
+//     followRoute(route);
+//     likeRoute(route);
+//     subscriptionRoute(route);
+//     reportRoute(route);
+// });
 
 server.listen(process.env.PORT, () => {
     console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${process.env.PORT}`)
