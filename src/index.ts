@@ -12,23 +12,8 @@ const __ = require("lodash");
 const rateLimit = require('express-rate-limit');
 
 import { NextFunction, Request, Response } from "express";
-import corsOptions from "./utils/corsOptions";
-// import commoncontroller from "./components/common/commoncontroller";
-
-// import adminRoute from "./components/admin/index";
-// import userRoute from "./components/user";
-// import postRoute from "./components/post";
-// import followRoute from "./components/follow";
-// import likeRoute from "./components/like";
-// import contactRoute from "./components/contactUs";
-// import subscriptionRoute from "./components/subscription";
-// import aboutRoute from "./components/aboutUs";
-// import supportRoute from "./components/supportTicket";
-// import cmsRoute from "./components/cms";
-// import settingRoute from "./components/userSetting";
-// import reportRoute from "./components/report";
-// import webhookController from "./components/subscription/webhookController";
-// import subscriptionController from "./components/subscription/subscriptionController";
+// import corsOptions from "./utils/corsOptions";
+// import commoncontroller from "./components/common/commoncontroller
 const log4js = require("log4js");
 
 process.on('uncaughtException', (error, origin) => {
@@ -102,7 +87,7 @@ const apiLimiter = rateLimit({
 const userRouter = express.Router();
 userRouter.use(apiLimiter);
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(cookieParser());
 
 app.use(bodyParser.json({ limit: '50mb' }))
