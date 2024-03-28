@@ -59,8 +59,8 @@ app.use('/uploads', express.static(path_1.default.join(__dirname, '../uploads/')
 app.use(morgan('dev'));
 const http = require('http');
 const server = http.createServer(app);
-app.get("/test", function (req, res, next) {
-    res.send("success");
+app.get("/ping", function (req, res, next) {
+    res.send("PONG......🏓");
 });
 app.get('/api/apple-app-site-association', (req, res) => {
     const data = {
