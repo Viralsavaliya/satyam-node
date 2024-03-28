@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Invoice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    .empty-section {
+      display: none;
+    }
+
+    .total-amount {
+      width: 100%;
+      text-align: right;
+    }
+
+    .number {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .number1 {
+      width: 48%;
+    }
+    .numbername{
+      width: 100%;
+      text-align: right;
+    }
+    .fullwidth{ 
+      width: 100%;
+    }
+    .first{
+      width: 50%;
+    }
+    .tttt{
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+ 
+  <!-- <img src="../aaaa.jpeg" alt="aaaaaaaa" width="100%" height="150px" srcset=""> -->
+  <table class="tttt" style="border: none;">
+    <tr>
+      <td>
+        <div class="number">
+          <img src="<%= logo %>" alt="Logo" width="600px" height="250px">
+        </div>
+      </td>
+      <td>
+        <div class="number">
+          <p ><strong>Kalpesh : 97129 79754</strong></p>
+          <p ><strong>Haresh : 99250 59609</strong></p>
+          <p ><strong>kalpeshmechnic@gmail.com</strong></p>
+          <p ><strong>Plot no.65, jay Ambe soc., Near,</strong></p>
+          <p ><strong>milan point, Bamroli, Pandesara</strong></p>
+          <p ><strong>Surat, Gujrat-394210</strong></p>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <!-- <h1>Bill Invoice</h1> -->
+  <table class="tttt" style="border: none;">
+    <tr>
+      <td>
+        <div class="number">
+          <p><strong>Client Name</strong>: <%= data?.user?.name %></p>
+          <p><strong>Mobile No.</strong>: <%= data?.user?.mobile %></p>
+          <p ><strong>Car No.</strong>: <%= data?.user?.carnumber %></p>
+          <p ><strong>Address</strong>: <%= data?.user?.address %></p>
+        </div>
+      </td>
+      <td>
+        <div class="number">
+          <p ><strong>Job Number</strong>: <%= data?.bilnumber %></p>
+          <p ><strong>Model</strong>: <%= data?.user?.model %></p>
+          <p ><strong>Engine No</strong>: <%= data?.user?.engineno %></p>
+          <p ><strong>Chassis No</strong>: <%= data?.user?.chassisno %></p>
+          <p><strong>Millage</strong>: <%= data?.millage %></p>
+        </div>
+      </td>
+    </tr>
+  </table>
+ 
+
+
+  <% if (data?.checkedItems && data.checkedItems.length> 0) { %>
+    <h2>All Items:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.checkedItems.forEach(item=> { %>
+          <tr>
+            <td>
+              <%= item.item %>
+            </td>
+            <td>
+              <%= item.amount %>
+            </td>
+          </tr>
+          <% }); %>
+      </tbody>
+    </table>
+    <% } else { %>
+      <div class="empty-section">
+        <p>No items found.</p>
+      </div>
+      <% } %>
+
+        <% if (data?.inputList && data.inputList.length> 0) { %>
+          <h2>Input List:</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Text Value</th>
+                <th>Number Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% data.inputList.forEach(input=> { %>
+                <tr>
+                  <td>
+                    <%= input.textValue %>
+                  </td>
+                  <td>
+                    <%= input.numberValue %>
+                  </td>
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+          <% } else { %>
+            <div class="empty-section">
+              <p>No input list found.</p>
+            </div>
+            <% } %>
+
+              <p class="total total-amount"><strong>Total:</strong>
+                <%= data?.total %>
+              </p>
+</body>
+
+</html>

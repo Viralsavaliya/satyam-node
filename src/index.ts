@@ -9,11 +9,23 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const _ = require("underscore");
 const __ = require("lodash");
-const rateLimit = require('express-rate-limit');
 
 import { NextFunction, Request, Response } from "express";
+import corsOptions from "./utils/corsOptions";
 
-/* for prevent crash */
+import adminRoute from "./components/admin/index";
+import userRoute from "./components/user";
+import postRoute from "./components/post";
+import followRoute from "./components/follow";
+import likeRoute from "./components/like";
+import contactRoute from "./components/contactUs";
+import subscriptionRoute from "./components/subscription";
+import aboutRoute from "./components/aboutUs";
+import supportRoute from "./components/supportTicket";
+import cmsRoute from "./components/cms";
+import settingRoute from "./components/userSetting";
+import reportRoute from "./components/report";
+
 process.on('uncaughtException', (error, origin) => {
     console.log('----- Uncaught exception -----')
     console.log(error)
@@ -45,7 +57,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(cookieParser());
 
 app.use(bodyParser.json({ limit: '50mb' }))
@@ -91,6 +103,33 @@ app.get('/api/apple-app-site-association', (req: any, res: any) => {
     res.set('Content-Type', 'application/pkcs7-mime')
     return res.status(200).send(data);
 })
+
+app.prefix("/api/admin", (route: any) => {
+    adminRoute(route);
+    contactRoute(route);
+    aboutRoute(route);
+    supportRoute(route);
+    cmsRoute(route);
+});
+
+app.prefix("/api/user", (route: any) => {
+    userRoute(route);
+});
+
+app.prefix("/api/post", (route: any) => {
+    postRoute(route);
+});
+
+app.prefix("/api/setting", (route: any) => {
+    settingRoute(route);
+});
+
+app.prefix("/api", (route: any) => {
+    followRoute(route);
+    likeRoute(route);
+    subscriptionRoute(route);
+    reportRoute(route);
+});
 
 server.listen(process.env.PORT, () => {
     console.log(`⚡️[NodeJs server]: Server is running at http://localhost:${process.env.PORT}`)

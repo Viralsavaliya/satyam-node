@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "whitetail-tactic",
+  "private_key_id": "",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDJBCrbj6Zzg1Tj\nT1Jd9PWAJGBgDgQZ1vCKaNdV7GL04icQ+IKzVScNFjNEwEkWtpjL7JSMT7en+RDy\n3HzAy5lxpjD7zNKGYXeXJDcSCc1agAh6Rrfx64Z/8Czs2MP+JbuGS/Z0v+LL9XIs\nJ5M1SmAO/wNg0sup+aPuaoA9za6c3R/TigVQXmdZ1BRVjrKRjIdlB1HivGn94OvY\ngvLBjqYFBfuYI20MHNbUVGhGDCrKyvVcvAXUX9U2w8j9YTrFVHmkDiMFHoZFVNjK\n9fAmWBVg91tmJekON2A9PuQZgnvSk2GnIwwntRCb1HuZFSDFyEtVgYguvJxaESCt\n28jlm7iVAgMBAAECggEAL3h3OYoTPCi54YNgN3WLi3MruktdDxAaFombPryYAu4s\nXR7e2MRleDrzqQsCx6Uf8NqCGx+RRs70AHJu2KXMKxFc9H3igp8eW5hPFAiyEOr2\n9Y9hTbV5+hkpNtaa9FgLULP8NAaDo/hm+cPvyPAzPp9c+B7Xv2CHpNxMRCwgTgUk\nIrePT77Rx1NhaC4O8kyxZPPIU1dqq38u2Xcg7MP0L23jS9mOF+Ewtg7Se1JMia6F\nZEkoC2WSjuHiezWW/1C2N91EoDwF7DQG+GBwRVIkhQEFHDWXSLMNEuFB6kKLC40f\nWTYNfDpZnp/XBq/NgSozjY2v3U3G/UkFOoodpiWgaQKBgQDlC9Y5ptfKTgIiNUqF\ne2awNnlJOYPaBYCQ9T+L0bg/+A3l93sqbeAcqRVu7r2NyWcBPJvYoMjBYcqEoUUD\nN6cQu6ItRZECClVYGynfPRje1suXspsGPlrgF6rAdywAlo6lNaDE7kRWOv4/Uxo6\nIUItv1jCVEqsW/M1gnNz7hnhDQKBgQDgq+kKVb1a9WVu8nX8sKiX7lgW18NdkTij\nfeNrxMEmApz9YxPq+h4RLJ9abxnIq3FXoGdt8i5i74KsxNAt1DRZqPd9wIBeNiTl\nDfl376ud4pX0lZRUuo8wFezq9d/YPymi75XouKngGJ6p5eNo3rphn53hRBPKNC5H\nAxutla8DqQKBgAJ963m7F/Pqf1lx7PqgyhA2t4EVcBrKHoj1MhjKUk/X2gbbd2qR\nwXNuX35SeJt3SniX+TYVIboA31wsCP0s+NNUx0Ho1NgJ1r3bpcv49TFPcu2Wktsx\niHmRqFjpsv/ao3imqbYaxYGOqL91nv5s6DRpNYT/t8RCR9YYMjtbpsptAoGAZA0K\nZXjTL2tytVqyIkqFectBXULOlJ90KpKIMVjYbtXhFZIGr7CcrSdC+6HYSJ3Yhp4/\nER41fAePGOM4lgAXJApz1INiZxITkhGME9Yehdv+zYHDIYxG8bIB5IyEF6fhIdcx\n2gZKWCp+lchzYiM1uv268DNB4N0l8qe2rrGm06kCgYBklcJnSh39aGIWUIa4e2Wi\nixDAAfOnVbs8r+h5GsxQHlA/iER/+eWwoU4Lx7aDuABbX2Q0pvCeQ5OH5OVbbSEO\nCpbB06KSISBquA+A9rvXgT34karUpVYE1ou+u1VQfx9ol/oJYqQ3J+lU+lmTm1VU\nKA+9OLDewfRJliuZv53sng==\n-----END PRIVATE KEY-----\n",
+  "client_email": "",
+  "client_id": "",
+  "auth_uri": "",
+  "token_uri": "",
+  "auth_provider_x509_cert_url": "",
+  "client_x509_cert_url": "",
+  "universe_domain": ""
+}
