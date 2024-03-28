@@ -70,8 +70,8 @@ app.use(morgan('dev'));
 const http = require('http');
 const server = http.createServer(app);
 
-app.get("/test", function (req: Request, res: Response, next: NextFunction) {
-    res.send("success")
+app.get("/ping", function (req: Request, res: Response, next: NextFunction) {
+    res.send("PONG......🏓")
 });
 
 app.get('/api/apple-app-site-association', (req: any, res: any) => {
