@@ -12,7 +12,7 @@ exports.default = [
         method: "post",
         controller: usercontroller_1.default.register,
         validation: validation_1.default.registerValidation,
-        // isPublic: true,
+        isPublic: true,
         // isEncrypt: false
     },
     {

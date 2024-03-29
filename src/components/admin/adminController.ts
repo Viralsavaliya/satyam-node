@@ -79,7 +79,9 @@ async function login(req: Request, res: Response) {
 
     if (!email) return commonUtils.sendError(req, res, { message: AppStrings.EMAIL_MOBILE_REQUIRED }, 409);
 
-    const user = await Admin.findOne({ email: email });
+    // const user = await Admin.findOne({ email: email });
+    const user = await Admin.findOne({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
+
 
     if (!user && social_id)
       return commonUtils.sendSuccess(req, res, { is_register: false }, 200); //need to reg
