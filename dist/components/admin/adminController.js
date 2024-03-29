@@ -113,7 +113,7 @@ function login(req, res) {
             if (!email)
                 return commonUtils_1.default.sendError(req, res, { message: appStrings_1.AppStrings.EMAIL_MOBILE_REQUIRED }, 409);
             // const user = await Admin.findOne({ email: email });
-            const user = yield Admin.findOne({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
+            const user = yield Admin.find({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
             if (!user && social_id)
                 return commonUtils_1.default.sendSuccess(req, res, { is_register: false }, 200); //need to reg
             if (!user)
