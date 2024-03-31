@@ -25,6 +25,7 @@ import supportRoute from "./components/supportTicket";
 import cmsRoute from "./components/cms";
 import settingRoute from "./components/userSetting";
 import reportRoute from "./components/report";
+const Admin = require('../src/components/admin/models/adminModel');
 
 process.on('uncaughtException', (error, origin) => {
     console.log('----- Uncaught exception -----')
@@ -69,6 +70,11 @@ app.use(morgan('dev'));
 
 const http = require('http');
 const server = http.createServer(app);
+
+app.get("/", async function (req: Request, res: Response, next: NextFunction) {
+    const admins = await Admin.findOne()
+    return res.send({ admins })
+});
 
 app.get("/ping", function (req: Request, res: Response, next: NextFunction) {
     res.send("PONG......🏓")
