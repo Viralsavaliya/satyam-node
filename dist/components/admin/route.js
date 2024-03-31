@@ -78,7 +78,7 @@ exports.default = [
         path: "/userList",
         method: "get",
         controller: adminController_1.default.userList,
-        // isPublic: true,
+        isPublic: true,
     },
     {
         path: "/allUserList",

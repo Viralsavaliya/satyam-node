@@ -8,7 +8,7 @@ export default [
         method: "post",
         controller: UserController.register,
         validation: V.registerValidation,
-        // isPublic: true,
+        isPublic: true,
         // isEncrypt: false
     },
     {
