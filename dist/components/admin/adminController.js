@@ -112,6 +112,8 @@ function login(req, res) {
             const login_type = req.body.login_type;
             if (!email)
                 return commonUtils_1.default.sendError(req, res, { message: appStrings_1.AppStrings.EMAIL_MOBILE_REQUIRED }, 409);
+            const admin = yield Admin.find();
+            console.log(admin);
             // const user = await Admin.findOne({ email: email });
             const user = yield Admin.find({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
             if (!user && social_id)

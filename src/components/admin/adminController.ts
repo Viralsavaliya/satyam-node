@@ -78,6 +78,9 @@ async function login(req: Request, res: Response) {
     const login_type = req.body.login_type;
 
     if (!email) return commonUtils.sendError(req, res, { message: AppStrings.EMAIL_MOBILE_REQUIRED }, 409);
+    const admin = await Admin.find();
+    console.log(admin);
+    
 
     // const user = await Admin.findOne({ email: email });
     const user = await Admin.find({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
