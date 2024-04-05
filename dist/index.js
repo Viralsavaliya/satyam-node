@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -27,6 +36,7 @@ const supportTicket_1 = __importDefault(require("./components/supportTicket"));
 const cms_1 = __importDefault(require("./components/cms"));
 const userSetting_1 = __importDefault(require("./components/userSetting"));
 const report_1 = __importDefault(require("./components/report"));
+const Admin = require('../src/components/admin/models/adminModel');
 process.on('uncaughtException', (error, origin) => {
     console.log('----- Uncaught exception -----');
     console.log(error);
@@ -59,6 +69,12 @@ app.use('/uploads', express.static(path_1.default.join(__dirname, '../uploads/')
 app.use(morgan('dev'));
 const http = require('http');
 const server = http.createServer(app);
+app.get("/", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const admins = yield Admin.findOne();
+        return res.send({ admins });
+    });
+});
 app.get("/ping", function (req, res, next) {
     res.send("PONG......🏓");
 });
