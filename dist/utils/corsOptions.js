@@ -8,7 +8,8 @@ const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:3002",
     "https://whitetail-tactical.com",
-    "https://satyam-nbq5.vercel.app"
+    "https://satyam-nbq5.vercel.app",
+    "https://satyam-nbq5.vercel.app/"
 ];
 const corsOptions = {
     //origin:'*',

@@ -23,7 +23,6 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const _ = require("underscore");
 const __ = require("lodash");
-const corsOptions_1 = __importDefault(require("./utils/corsOptions"));
 const index_1 = __importDefault(require("./components/admin/index"));
 const user_1 = __importDefault(require("./components/user"));
 const post_1 = __importDefault(require("./components/post"));
@@ -61,7 +60,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-app.use(cors(corsOptions_1.default));
+// app.use(cors(corsOptions))
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
