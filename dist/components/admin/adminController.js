@@ -112,16 +112,16 @@ function login(req, res) {
             const login_type = req.body.login_type;
             if (!email)
                 return commonUtils_1.default.sendError(req, res, { message: appStrings_1.AppStrings.EMAIL_MOBILE_REQUIRED }, 409);
-            const admin = yield Admin.find();
-            console.log(admin);
+            // const admin = await Admin.find();
+            // console.log(admin);
             // const user = await Admin.findOne({ email: email });
-            const user = yield Admin.find({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
+            const user = yield Admin.findOne({ email: email }); // Increase timeout to 20 seconds (20000 milliseconds)
             if (!user && social_id)
                 return commonUtils_1.default.sendSuccess(req, res, { is_register: false }, 200); //need to reg
             if (!user)
                 return commonUtils_1.default.sendError(req, res, { message: appStrings_1.AppStrings.USER_CREDENTIAL_DOES_NOT_MATCH }, 409);
             user.pushToken = req.body.pushToken || null;
-            yield user.save();
+            // await user.save();
             if (social_id && user.social_id == null) {
                 user.social_id = social_id ? social_id : user.social_id;
                 user.login_type = login_type ? login_type : user.login_type;
@@ -130,8 +130,7 @@ function login(req, res) {
             if (social_id && user.social_id != social_id) {
                 return commonUtils_1.default.sendError(req, res, { message: "sorry You are not owner of this account!" }, 409);
             }
-            if (user.status != 1)
-                return commonUtils_1.default.sendError(req, res, { message: appStrings_1.AppStrings.USER_DEACTIVATE }, 409);
+            // if (user.status != 1) return commonUtils.sendError(req, res, { message: AppStrings.USER_DEACTIVATE }, 409);
             // if (!user.is_verify) return commonUtils.sendError(req, res, { message: "verify your email befor login!" }, 409);
             // let hostname = req.headers.host;
             // query.is_verify = true;
@@ -140,6 +139,7 @@ function login(req, res) {
             //     await SendEmailVarification(email, user.fullname, hostname);
             //     return commonUtils.sendError(req, res, { message: "User is not varified!" }, 409);
             // }
+            console.log(password, user.password);
             if (password) {
                 const valid_password = yield bcrypt.compare(password, user.password);
                 if (!valid_password) {

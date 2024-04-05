@@ -78,20 +78,19 @@ async function login(req: Request, res: Response) {
     const login_type = req.body.login_type;
 
     if (!email) return commonUtils.sendError(req, res, { message: AppStrings.EMAIL_MOBILE_REQUIRED }, 409);
-    const admin = await Admin.find();
-    console.log(admin);
-    
+    // const admin = await Admin.find();
+    // console.log(admin);
+
 
     // const user = await Admin.findOne({ email: email });
-    const user = await Admin.find({ email: email }).maxTimeMS(30000); // Increase timeout to 20 seconds (20000 milliseconds)
-
+    const user = await Admin.findOne({ email: email })// Increase timeout to 20 seconds (20000 milliseconds)
 
     if (!user && social_id)
       return commonUtils.sendSuccess(req, res, { is_register: false }, 200); //need to reg
 
     if (!user) return commonUtils.sendError(req, res, { message: AppStrings.USER_CREDENTIAL_DOES_NOT_MATCH }, 409);
     user.pushToken = req.body.pushToken || null;
-    await user.save();
+    // await user.save();
 
     if (social_id && user.social_id == null) {
       user.social_id = social_id ? social_id : user.social_id;
@@ -103,7 +102,7 @@ async function login(req: Request, res: Response) {
       return commonUtils.sendError(req, res, { message: "sorry You are not owner of this account!" }, 409);
     }
 
-    if (user.status != 1) return commonUtils.sendError(req, res, { message: AppStrings.USER_DEACTIVATE }, 409);
+    // if (user.status != 1) return commonUtils.sendError(req, res, { message: AppStrings.USER_DEACTIVATE }, 409);
 
 
     // if (!user.is_verify) return commonUtils.sendError(req, res, { message: "verify your email befor login!" }, 409);
@@ -115,6 +114,8 @@ async function login(req: Request, res: Response) {
     //     await SendEmailVarification(email, user.fullname, hostname);
     //     return commonUtils.sendError(req, res, { message: "User is not varified!" }, 409);
     // }
+    console.log(password, user.password);
+
     if (password) {
       const valid_password = await bcrypt.compare(password, user.password);
       if (!valid_password) {
