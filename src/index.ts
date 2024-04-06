@@ -58,7 +58,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 app.use(cookieParser());
 
 app.use(bodyParser.json({ limit: '50mb' }))
